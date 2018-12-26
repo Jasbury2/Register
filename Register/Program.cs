@@ -22,8 +22,8 @@ namespace Register
 				Console.WriteLine($"{item.Description}\t{item.Price}");
 			}
 
-			Console.WriteLine($"Subtotal: {transaction.SubTotal}");
-			Console.WriteLine($"Total Discount {transaction.TotalDiscount}");
+			Console.WriteLine($"Subtotal: {transaction.SubTotal:N2}");
+			Console.WriteLine($"Total Discount {transaction.TotalDiscount:N2}");
 			Console.ReadLine();
 		}
 

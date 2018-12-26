@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Register.Models
@@ -32,7 +33,27 @@ namespace Register.Models
 
 		public void RecalculateSubtotal()
 		{
-			SubTotal = Items.Sum(x => x.Price);
+            decimal calculatingPrice = 0;
+            decimal totalDiscountCalculated = 0;
+
+            foreach (var item in Items)
+            {
+                var discountCode = _discounts.FirstOrDefault(d => d.DepartmentCode == item.DepartmentCode);
+
+                if (discountCode == null)
+                {
+                 calculatingPrice += item.Price;
+                }
+
+                var discount = ((discountCode.PercentOff / 100) * item.Price);
+                discount = (Math.Round((100 * discount))) / 100;
+                calculatingPrice += item.Price - discount;
+
+                totalDiscountCalculated += discount; 
+            }
+            TotalDiscount = totalDiscountCalculated; 
+            SubTotal = calculatingPrice;
+
 		}
 
 	}
